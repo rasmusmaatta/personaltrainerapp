@@ -4,6 +4,7 @@ import { DataGrid, type GridColDef, type GridRenderCellParams } from "@mui/x-dat
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import AddTraining from "./AddTraining";
+import { fetchTraining, saveTraining } from "../trainingapi";
 
 
 function TrainingList() {
@@ -14,6 +15,7 @@ function TrainingList() {
         { field: "date", headerName: "Date" },
         { field: "duration", headerName: "Duration" },
         { field: "activity", headerName: "Activity" },
+        { field: "customer", headerName: "Customer name" },
         {
             field: "_links.self.href",
             headerName: "",
@@ -28,19 +30,14 @@ function TrainingList() {
     ]
 
     const getTraining = () => {
-        fetch(import.meta.env.VITE_API_URL + "/trainings")
-        .then(response => {
-            if (!response.ok)
-                throw new Error("Error when fetching trainings")
-            return response.json();
-        })
-        .then(data => setTraining(data._embedded.trainings))
-        .catch(err => console.error(err))
+        fetchTraining()
+            .then(data => setTraining(data._embedded.trainings))
+            .catch(err => console.error(err))
     }
-    
 
-        const handleDelete = (url: string) => {
-        if (window.confirm("Are you sure?")) {
+
+    const handleDelete = (url: string) => {
+        if (window.confirm("Are you sure?")) {     // trainingapi toimimaan
             fetch(url, {
                 method: "DELETE"
             })
@@ -55,23 +52,11 @@ function TrainingList() {
         }
     }
 
-        const handleAdd = (training: Training) => {
-            fetch(import.meta.env.VITE_API_URL + "/trainings", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(training)
-            })
-            .then(response => {
-                if(!response.ok)
-                    throw new Error("Error when adding new training");
-    
-                return response.json();
-            })
+    const handleAdd = (training: Training) => {
+        saveTraining(training)
             .then(() => getTraining())
             .catch(err => console.error(err))
-        }
+    }
 
     useEffect(() => {
         getTraining();
@@ -81,8 +66,8 @@ function TrainingList() {
 
     return (
         <>
-            <Stack sx={{mt: 2, mb: 2}} direction = "row">
-            <AddTraining handleAdd={handleAdd} />
+            <Stack sx={{ mt: 2, mb: 2 }} direction="row">
+                <AddTraining handleAdd={handleAdd} />
             </Stack>
             <div style={{ width: "90%", height: 500, margin: "auto" }}>
                 <DataGrid
