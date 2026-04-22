@@ -19,8 +19,8 @@ export default function Home() {
       </Typography>
       <Stack direction="row" spacing={2}>
         <Button
-          variant="contained"
-          color="primary"
+          variant="outlined"
+          color="inherit"
           component={Link}
           to="/customers"
           size="large"
@@ -29,7 +29,7 @@ export default function Home() {
         </Button>
         <Button
           variant="outlined"
-          color="primary"
+          color="inherit"
           component={Link}
           to="/trainings"
           size="large"
