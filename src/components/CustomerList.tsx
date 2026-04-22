@@ -38,17 +38,9 @@ function CustomerList() {
             .catch(err => console.error(err))
     }
 
-    const handleDelete = (url: string) => {     // customerapi kautta toimimaan
+    const handleDelete = (url: string) => {
         if (window.confirm("Are you sure?")) {
-            fetch(url, {
-                method: "DELETE"
-            })
-                .then(response => {
-                    if (!response.ok)
-                        throw new Error("Error when deleting a customer");
-
-                    return response.json();
-                })
+            deleteCustomer(url)
                 .then(() => getCustomers())
                 .catch(err => console.error(err));
         }

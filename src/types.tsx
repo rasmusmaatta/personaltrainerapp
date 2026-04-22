@@ -22,9 +22,11 @@ export type CustomerData = {
 export type Customer = Omit<CustomerData, "_links">;
 
 export type TrainingData= {
+    id: string,
     date: string,
     duration: string,
     activity: string,
+    customer: string,
     _links: {
         self:{
             href: string;

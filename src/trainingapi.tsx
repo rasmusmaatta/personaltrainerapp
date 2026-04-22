@@ -1,39 +1,38 @@
 import type { Training } from "./types";
 
 export const fetchTraining = () => {
-    return fetch(import.meta.env.VITE_API_URL + "trainings")
-            .then(response => {
-                if (!response.ok)
-                    throw new Error("Error when fetching trainings")
-                return response.json();
-            })
+    return fetch(import.meta.env.VITE_API_URL + "gettrainings")
+        .then(response => {
+            if (!response.ok)
+                throw new Error("Error when fetching trainings")
+            return response.json();
+        })
 }
 
 export const saveTraining = (training: Training) => {
     return fetch(import.meta.env.VITE_API_URL + "/trainings", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify(training)
-        })
-            .then(response => {
-                if (!response.ok)
-                    throw new Error("Error when adding new training");
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(training)
+    })
+        .then(response => {
+            if (!response.ok)
+                throw new Error("Error when adding new training");
 
-                return response.json();
-            })
+            return response.json();
+        })
 }
 
 export const deleteTraining = (url: string) => {
-     if (window.confirm("Are you sure?")) {
-            fetch(url, {
-                method: "DELETE"
-            })
-                .then(response => {
-                    if (!response.ok)
-                        throw new Error("Error when deleting");
+    return fetch(url, {
+        method: "DELETE"
+    })
+        .then(response => {
+            if (!response.ok)
+                throw new Error("Error when deleting");
 
-                    return response.json();
-                })
-}}
+            return response.json();
+        })
+}

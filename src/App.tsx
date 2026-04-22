@@ -1,35 +1,65 @@
 import './App.css'
+import { useState } from 'react';
 import CssBaseline from "@mui/material/CssBaseline";
 import Container from "@mui/material/Container"
 import AppBar from '@mui/material/AppBar';
 import Toolbar from '@mui/material/Toolbar';
 import Typography from "@mui/material/Typography"
-import Button from '@mui/material/Button';
-import { Link, Navigate, Route, Routes } from 'react-router';
+import IconButton from '@mui/material/IconButton';
+import Menu from '@mui/material/Menu';
+import MenuItem from '@mui/material/MenuItem';
+import MenuIcon from '@mui/icons-material/Menu';
+import { Link, Route, Routes } from 'react-router';
+import Home from './components/Home';
 import CustomerList from './components/CustomerList';
 import TrainingList from './components/TrainingList';
 
 function App() {
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
+  const open = Boolean(anchorEl);
 
+  const handleMenuOpen = (event: React.MouseEvent<HTMLButtonElement>) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleMenuClose = () => {
+    setAnchorEl(null);
+  };
 
   return (
     <>
       <Container maxWidth="lg">
-        <AppBar position="static">
+        <AppBar position="static" color="warning">
           <Toolbar sx={{ gap: 2 }}>
-            <Typography variant="h6" sx={{ flexGrow: 1 }}>
+            <IconButton
+              color="inherit"
+              onClick={handleMenuOpen}
+              size="large"
+            >
+              <MenuIcon />
+            </IconButton>
+            <Typography variant="h6">
               Personal Trainer App
             </Typography>
-            <Button color="inherit" component={Link} to="/customers">
-              Customers
-            </Button>
-            <Button color="inherit" component={Link} to="/trainings">
-              Trainings
-            </Button>
+            <Menu
+              anchorEl={anchorEl}
+              open={open}
+              onClose={handleMenuClose}
+            >
+              <MenuItem component={Link} to="/" onClick={handleMenuClose}>
+                Home
+              </MenuItem>
+              <MenuItem component={Link} to="/customers" onClick={handleMenuClose}>
+                Customers
+              </MenuItem>
+              <MenuItem component={Link} to="/trainings" onClick={handleMenuClose}>
+                Trainings
+              </MenuItem>
+            </Menu>
           </Toolbar>
         </AppBar>
         <Routes>
-          <Route path="/" element={<Navigate to="/customers" replace />} />
+          <Route path="/" element={<Home />} />
           <Route path="/customers" element={<CustomerList />} />
           <Route path="/trainings" element={<TrainingList />} />
         </Routes>

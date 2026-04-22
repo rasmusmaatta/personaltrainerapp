@@ -38,7 +38,7 @@ export default function AddCustomer(props: AddCustomerProps) {
 
   return (
     <>
-      <Button variant="outlined" onClick={handleClickOpen}>
+      <Button variant="outlined" onClick={handleClickOpen} color="inherit">
         Add Customer
       </Button>
       <Dialog open={open} onClose={handleClose}>
