@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { Training, TrainingData } from "../types";
 import { DataGrid, type GridColDef, type GridRenderCellParams } from "@mui/x-data-grid";
 import Button from "@mui/material/Button";
@@ -31,10 +31,10 @@ function TrainingList() {
         fetch(import.meta.env.VITE_API_URL + "/trainings")
         .then(response => {
             if (!response.ok)
-                throw new Error("Error when fetching customers")
+                throw new Error("Error when fetching trainings")
             return response.json();
         })
-        .then(data => setTraining(data._embedded.customers))
+        .then(data => setTraining(data._embedded.trainings))
         .catch(err => console.error(err))
     }
     
@@ -56,22 +56,26 @@ function TrainingList() {
     }
 
         const handleAdd = (training: Training) => {
-            fetch(import.meta.env.VITE_API_URL + "/customers", {
+            fetch(import.meta.env.VITE_API_URL + "/trainings", {
                 method: "POST",
                 headers: {
-                    "Content-Type": "application-json"
+                    "Content-Type": "application/json"
                 },
                 body: JSON.stringify(training)
             })
             .then(response => {
                 if(!response.ok)
-                    throw new Error("Error when adding new customer");
+                    throw new Error("Error when adding new training");
     
                 return response.json();
             })
             .then(() => getTraining())
             .catch(err => console.error(err))
         }
+
+    useEffect(() => {
+        getTraining();
+    }, []);
 
 
 

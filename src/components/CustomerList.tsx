@@ -32,7 +32,7 @@ function CustomerList(){
     ]
 
     const getCustomers = () => {
-        fetch(import.meta.env.VITE_API_URL + "customers" )
+        fetch(import.meta.env.VITE_API_URL + "/customers" )
         .then(response => {
             if (!response.ok)
                 throw new Error("Error when fetching customers")
