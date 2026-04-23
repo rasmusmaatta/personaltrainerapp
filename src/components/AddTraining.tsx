@@ -15,9 +15,11 @@ type AddTrainingProps = {
 export default function AddTraining(props: AddTrainingProps) {
     const [open, setOpen] = useState(false);
     const [training, setTraining] = useState<Training>({
+        id:"",
         date: "",
         duration: "",
-        activity: ""
+        activity: "",
+        customer: ""
     })
 
     const handleClickOpen = () => {

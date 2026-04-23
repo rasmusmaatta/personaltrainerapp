@@ -1,7 +1,7 @@
 import type { Training } from "./types";
 
 export const fetchTraining = () => {
-    return fetch(import.meta.env.VITE_API_URL + "gettrainings")
+    return fetch(import.meta.env.VITE_API_URL + "/gettrainings")
         .then(response => {
             if (!response.ok)
                 throw new Error("Error when fetching trainings")
@@ -25,8 +25,8 @@ export const saveTraining = (training: Training) => {
         })
 }
 
-export const deleteTraining = (url: string) => {
-    return fetch(url, {
+export const deleteTraining = (id: string) => {
+    return fetch("https://customer-rest-service-frontend-personaltrainer.2.rahtiapp.fi/api/trainings/" + id, {
         method: "DELETE"
     })
         .then(response => {

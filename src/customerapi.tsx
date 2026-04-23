@@ -11,8 +11,8 @@ export const fetchCustomer = () => {
         })
 }
 
-export const deleteCustomer = (url: string) => {
-      return fetch(url, {
+export const deleteCustomer = (id: string) => {
+      return fetch("https://customer-rest-service-frontend-personaltrainer.2.rahtiapp.fi/api/customers/" + id, {
             method: "DELETE"
         })
             .then(response => {
@@ -38,5 +38,22 @@ export const saveCustomer = (customer: Customer) => {
 
             return response.json();
         })
+}
+
+export const editCustomer = (url: string, updateCustomer: Customer) => {
+    return fetch(url, {
+            method: "PUT",
+            headers: {
+                "Content-Type": "application-json"
+            },
+            body: JSON.stringify(updateCustomer)
+        })
+            .then(response => {
+                if (!response.ok)
+                    throw new Error("Error when editing customer");
+
+                return response.json();
+            })
+           
 }
 

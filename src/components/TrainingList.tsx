@@ -12,18 +12,31 @@ function TrainingList() {
     const [training, setTraining] = useState<TrainingData[]>([]);
 
     const columns: GridColDef[] = [
-        { field: "date", headerName: "Date" },
+        { 
+            field: "date", 
+            width: 150, 
+            headerName: "Date",
+            valueFormatter: (value: string) => {
+                if (!value) return "";
+                return new Date(value).toISOString().split('T')[0]; // siisti
+            }
+        },
         { field: "duration", headerName: "Duration" },
         { field: "activity", headerName: "Activity" },
-        { field: "customer", headerName: "Customer name" },
+         {
+            field: "customer",
+            headerName: "Customer",
+            width: 200,
+            valueGetter: (value: { firstname: string, lastname: string }) => `${value.firstname} ${value.lastname}`
+        },
         {
-            field: "_links.self.href",
+            field: "id",
             headerName: "",
             sortable: false,
             filterable: false,
             disableColumnMenu: true,
             renderCell: (params: GridRenderCellParams) =>
-                <Button color="error" size="small" onClick={() => handleDelete(params.id as string)}>
+                <Button color="error" size="small" onClick={() => handleDelete(params.value as string)}>
                     Delete
                 </Button>
         }
@@ -31,7 +44,10 @@ function TrainingList() {
 
     const getTraining = () => {
         fetchTraining()
-            .then(data => setTraining(data._embedded.trainings))
+            .then(data => {
+                const trainings = Array.isArray(data) ? data : data._embedded?.trainings || data._embedded?.training || [];
+                setTraining(trainings);
+            })
             .catch(err => console.error(err))
     }
 
@@ -51,9 +67,9 @@ function TrainingList() {
                 .catch(err => console.error(err))
         }
 
-        useEffect(() => {
-            getTraining();
-        }, []);
+    useEffect(() => {
+        getTraining();
+    }, []);
 
 
 
@@ -66,7 +82,6 @@ function TrainingList() {
                     <DataGrid
                         columns={columns}
                         rows={training}
-                        getRowId={row => row._links.self.href}
                         autoPageSize
                         rowSelection={false}
                     />

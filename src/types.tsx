@@ -26,7 +26,16 @@ export type TrainingData= {
     date: string,
     duration: string,
     activity: string,
-    customer: string,
+    customer: {
+        id: number,
+        firstname: string,
+        lastname: string,
+        streetaddress: string,
+        postcode: string,
+        city: string,
+        email: string,
+        phone: string
+    },
     _links: {
         self:{
             href: string;

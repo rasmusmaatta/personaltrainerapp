@@ -5,7 +5,8 @@ import { DataGrid } from "@mui/x-data-grid";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import AddCustomer from "./AddCustomer";
-import { fetchCustomer, saveCustomer, deleteCustomer } from "../customerapi";
+import { fetchCustomer, saveCustomer, deleteCustomer, editCustomer } from "../customerapi";
+import EditCustomer from "./EditCustomer";
 
 
 function CustomerList() {
@@ -29,6 +30,15 @@ function CustomerList() {
                 <Button color="error" size="small" onClick={() => handleDelete(params.id as string)}>
                     Delete
                 </Button>
+        },
+        {
+            field: "_links.self.href",
+            headerName: "",
+            sortable: false,
+            filterable: false,
+            disableColumnMenu: true,
+            renderCell: (params: GridRenderCellParams) =>
+                <EditCustomer customer={params.row} handleUpdate={handleUpdate}/>
         }
     ]
 
@@ -48,6 +58,12 @@ function CustomerList() {
 
     const handleAdd = (customer: Customer) => {
         saveCustomer(customer)
+            .then(() => getCustomers())
+            .catch(err => console.error(err))
+    }
+
+    const handleUpdate = (url: string, updateCustomer: Customer) => {
+        editCustomer(url, updateCustomer)
             .then(() => getCustomers())
             .catch(err => console.error(err))
     }
