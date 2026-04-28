@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import type { Training, TrainingData } from "../types";
 import { DataGrid, type GridColDef, type GridRenderCellParams } from "@mui/x-data-grid";
+import dayjs from "dayjs";
 import Button from "@mui/material/Button";
 import Stack from "@mui/material/Stack";
 import AddTraining from "./AddTraining";
@@ -12,22 +13,29 @@ function TrainingList() {
     const [training, setTraining] = useState<TrainingData[]>([]);
 
     const columns: GridColDef[] = [
-        { 
-            field: "date", 
-            width: 150, 
+        {
+            field: "date",
+            width: 150,
             headerName: "Date",
             valueFormatter: (value: string) => {
                 if (!value) return "";
-                return new Date(value).toISOString().split('T')[0]; // siisti
+                return dayjs(value).format('DD-MM-YYYY');
             }
         },
-        { field: "duration", headerName: "Duration" },
+        { 
+            field: "duration",
+            width: 150,
+            headerName: "Duration (Minutes)" 
+        },
         { field: "activity", headerName: "Activity" },
-         {
+        {
             field: "customer",
             headerName: "Customer",
             width: 200,
-            valueGetter: (value: { firstname: string, lastname: string }) => `${value.firstname} ${value.lastname}`
+            valueGetter: (value: { firstname: string, lastname: string } | null) => {
+                if (!value) return "";
+                return `${value.firstname} ${value.lastname}`;
+            }
         },
         {
             field: "id",
@@ -61,11 +69,11 @@ function TrainingList() {
     }
 
 
-        const handleAdd = (training: Training) => {
-            saveTraining(training)
-                .then(() => getTraining())
-                .catch(err => console.error(err))
-        }
+    const handleAdd = (training: Training) => {
+        saveTraining(training)
+            .then(() => getTraining())
+            .catch(err => console.error(err))
+    }
 
     useEffect(() => {
         getTraining();
@@ -73,23 +81,23 @@ function TrainingList() {
 
 
 
-        return (
-            <>
-                <Stack sx={{ mt: 2, mb: 2 }} direction="row">
-                    <AddTraining handleAdd={handleAdd} />
-                </Stack>
-                <div style={{ width: "90%", height: 500, margin: "auto" }}>
-                    <DataGrid
-                        columns={columns}
-                        rows={training}
-                        autoPageSize
-                        rowSelection={false}
-                    />
-                </div>
-            </>
-        )
-    }
+    return (
+        <>
+            <Stack sx={{ mt: 2, mb: 2 }} direction="row">
+                <AddTraining handleAdd={handleAdd} />
+            </Stack>
+            <div style={{ width: "90%", height: 500, margin: "auto" }}>
+                <DataGrid
+                    columns={columns}
+                    rows={training}
+                    autoPageSize
+                    rowSelection={false}
+                />
+            </div>
+        </>
+    )
+}
 
 
 
-    export default TrainingList;
+export default TrainingList;

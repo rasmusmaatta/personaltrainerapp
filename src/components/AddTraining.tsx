@@ -24,11 +24,20 @@ export default function AddTraining(props: AddTrainingProps) {
     const [selectedCustomer, setSelectedCustomer] = useState<Customer | null>(null);
     const [training, setTraining] = useState<Training>({
         id: "",
-        date: dayjs().format('YYYY-MM-DD'),
-        duration: "",
+        date: dayjs().format('DD-MM-YYYY'),
+        duration: 0,
         activity: "",
-        customer: {}
-    })
+        customer: {
+        id: 0,
+        firstname: "",
+        lastname: "",
+        streetaddress: "",
+        postcode: "",
+        city: "",
+        email: "",
+        phone: ""
+    }
+    });
 
     useEffect(() => {
         fetchCustomer()
@@ -49,6 +58,22 @@ export default function AddTraining(props: AddTrainingProps) {
     const handleClose = () => {
         setOpen(false);
         setSelectedCustomer(null);
+        setTraining({
+            id: "",
+            date: dayjs().format('DD-MM-YYYY'),
+            duration: 0,
+            activity: "",
+            customer: {
+                id: 0,
+                firstname: "",
+                lastname: "",
+                streetaddress: "",
+                postcode: "",
+                city: "",
+                email: "",
+                phone: ""
+            }
+        });
     };
 
     const handleSubmit = () => {
@@ -80,8 +105,9 @@ export default function AddTraining(props: AddTrainingProps) {
                         required
                         margin="dense"
                         label="Duration"
+                        type="number"
                         value={training.duration}
-                        onChange={e => setTraining({ ...training, duration: e.target.value })}
+                        onChange={e => setTraining({ ...training, duration: parseInt(e.target.value) || 0 })}
                         fullWidth
                         variant="standard"
                     />
@@ -99,8 +125,10 @@ export default function AddTraining(props: AddTrainingProps) {
                         getOptionLabel={(option) => `${option.firstname} ${option.lastname}`}
                         value={selectedCustomer}
                         onChange={(event, newValue) => {
-                            setSelectedCustomer(newValue);
-                            setTraining({ ...training, customer: newValue || {} });
+                            if (newValue) {
+                                setSelectedCustomer(newValue);
+                                setTraining({ ...training, customer: newValue });
+                            }
                         }}
                         renderInput={(params) => <TextField {...params} label="Customer" variant="standard" required />}
                         fullWidth

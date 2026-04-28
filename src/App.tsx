@@ -13,6 +13,7 @@ import { Link, Route, Routes } from 'react-router';
 import Home from './components/Home';
 import CustomerList from './components/CustomerList';
 import TrainingList from './components/TrainingList';
+import Calendar from './components/Calendar'
 
 function App() {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -55,6 +56,9 @@ function App() {
               <MenuItem component={Link} to="/trainings" onClick={handleMenuClose}>
                 Trainings
               </MenuItem>
+              <MenuItem component={Link} to="/calendar" onClick={handleMenuClose}>
+                Calendar
+              </MenuItem>
             </Menu>
           </Toolbar>
         </AppBar>
@@ -62,6 +66,7 @@ function App() {
           <Route path="/" element={<Home />} />
           <Route path="/customers" element={<CustomerList />} />
           <Route path="/trainings" element={<TrainingList />} />
+          <Route path="/calendar" element={<Calendar />} />
         </Routes>
         <CssBaseline />
       </Container>
