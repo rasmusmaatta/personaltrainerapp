@@ -28,15 +28,15 @@ export default function AddTraining(props: AddTrainingProps) {
         duration: 0,
         activity: "",
         customer: {
-        id: 0,
-        firstname: "",
-        lastname: "",
-        streetaddress: "",
-        postcode: "",
-        city: "",
-        email: "",
-        phone: ""
-    }
+            id: 0,
+            firstname: "",
+            lastname: "",
+            streetaddress: "",
+            postcode: "",
+            city: "",
+            email: "",
+            phone: ""
+        }
     });
 
     useEffect(() => {

@@ -9,6 +9,7 @@ import { fetchCustomer, saveCustomer, deleteCustomer, editCustomer } from "../cu
 import EditCustomer from "./EditCustomer";
 
 
+
 function CustomerList() {
     const [customer, setCustomers] = useState<CustomerData[]>([]);
 

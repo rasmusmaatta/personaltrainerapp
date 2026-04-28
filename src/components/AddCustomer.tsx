@@ -14,6 +14,7 @@ type AddCustomerProps = {
 export default function AddCustomer(props: AddCustomerProps) {
   const [open, setOpen] = useState(false);
   const [customer, setCustomer] = useState<Customer>({
+    id: 0,
     firstname: "",
     lastname: "",
     streetaddress: "",
