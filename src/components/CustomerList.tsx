@@ -31,15 +31,15 @@ function CustomerList() {
                     Delete
                 </Button>
         },
-        {
-            field: "_links.self.href",
-            headerName: "",
-            sortable: false,
-            filterable: false,
-            disableColumnMenu: true,
-            renderCell: (params: GridRenderCellParams) =>
-                <EditCustomer customer={params.row} handleUpdate={handleUpdate}/>
-        }
+       {
+            field: "edit-action",
+             headerName: "",
+             sortable: false,
+             filterable: false,
+             disableColumnMenu: true,
+             renderCell: (params: GridRenderCellParams) =>
+                 <EditCustomer customer={params.row} handleUpdate={handleUpdate}/>
+         }
     ]
 
     const getCustomers = () => {

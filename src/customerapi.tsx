@@ -11,8 +11,8 @@ export const fetchCustomer = () => {
         })
 }
 
-export const deleteCustomer = (id: string) => {
-      return fetch("https://customer-rest-service-frontend-personaltrainer.2.rahtiapp.fi/api/customers/" + id, {
+export const deleteCustomer = (url: string) => {
+      return fetch(url, {
             method: "DELETE"
         })
             .then(response => {
@@ -25,7 +25,7 @@ export const deleteCustomer = (id: string) => {
 }
 
 export const saveCustomer = (customer: Customer) => {
-    return fetch(import.meta.env.VITE_API_URL + "customers", {
+    return fetch(import.meta.env.VITE_API_URL + "/customers", {
         method: "POST",
         headers: {
             "Content-Type": "application/json"
@@ -44,7 +44,7 @@ export const editCustomer = (url: string, updateCustomer: Customer) => {
     return fetch(url, {
             method: "PUT",
             headers: {
-                "Content-Type": "application-json"
+                "Content-Type": "application/json"
             },
             body: JSON.stringify(updateCustomer)
         })

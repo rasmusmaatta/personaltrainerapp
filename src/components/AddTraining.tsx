@@ -1,11 +1,17 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Button from '@mui/material/Button';
 import TextField from '@mui/material/TextField';
 import Dialog from '@mui/material/Dialog';
 import DialogActions from '@mui/material/DialogActions';
 import DialogContent from '@mui/material/DialogContent';
 import DialogTitle from '@mui/material/DialogTitle';
-import type { Training } from '../types';
+import Autocomplete from '@mui/material/Autocomplete';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
+import dayjs, { Dayjs } from 'dayjs';
+import type { Training, Customer, CustomerData } from '../types';
+import { fetchCustomer } from '../customerapi';
 
 type AddTrainingProps = {
     handleAdd: (training: Training) => void;
@@ -14,13 +20,27 @@ type AddTrainingProps = {
 
 export default function AddTraining(props: AddTrainingProps) {
     const [open, setOpen] = useState(false);
+    const [customers, setCustomers] = useState<Customer[]>([]);
+    const [selectedCustomer, setSelectedCustomer] = useState<Customer | null>(null);
     const [training, setTraining] = useState<Training>({
-        id:"",
-        date: "",
+        id: "",
+        date: dayjs().format('YYYY-MM-DD'),
         duration: "",
         activity: "",
-        customer: ""
+        customer: {}
     })
+
+    useEffect(() => {
+        fetchCustomer()
+            .then((data: any) => {
+                const customerList = data._embedded.customers.map((cust: CustomerData) => {
+                    const { _links, ...customer } = cust;
+                    return customer;
+                });
+                setCustomers(customerList);
+            })
+            .catch(error => console.error("Error fetching customers:", error));
+    }, []);
 
     const handleClickOpen = () => {
         setOpen(true);
@@ -28,6 +48,7 @@ export default function AddTraining(props: AddTrainingProps) {
 
     const handleClose = () => {
         setOpen(false);
+        setSelectedCustomer(null);
     };
 
     const handleSubmit = () => {
@@ -44,15 +65,17 @@ export default function AddTraining(props: AddTrainingProps) {
             <Dialog open={open} onClose={handleClose}>
                 <DialogTitle>New Training</DialogTitle>
                 <DialogContent>
-                    <TextField
-                        required
-                        margin="dense"
-                        label="Date"
-                        value={training.date}
-                        onChange={e => setTraining({ ...training, date: e.target.value })}
-                        fullWidth
-                        variant="standard"
-                    />
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                        <DatePicker
+                            label="Date"
+                            value={training.date ? dayjs(training.date) : null}
+                            onChange={(newValue) => {
+                                const formattedDate = newValue ? newValue.format('YYYY-MM-DD') : '';
+                                setTraining({ ...training, date: formattedDate });
+                            }}
+                            slotProps={{ textField: { fullWidth: true, variant: "standard" } }}
+                        />
+                    </LocalizationProvider>
                     <TextField
                         required
                         margin="dense"
@@ -70,6 +93,18 @@ export default function AddTraining(props: AddTrainingProps) {
                         onChange={e => setTraining({ ...training, activity: e.target.value })}
                         fullWidth
                         variant="standard"
+                    />
+                    <Autocomplete
+                        options={customers}
+                        getOptionLabel={(option) => `${option.firstname} ${option.lastname}`}
+                        value={selectedCustomer}
+                        onChange={(event, newValue) => {
+                            setSelectedCustomer(newValue);
+                            setTraining({ ...training, customer: newValue || {} });
+                        }}
+                        renderInput={(params) => <TextField {...params} label="Customer" variant="standard" required />}
+                        fullWidth
+                        sx={{ mt: 2 }}
                     />
                 </DialogContent>
                 <DialogActions>
