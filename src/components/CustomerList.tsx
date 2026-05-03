@@ -3,11 +3,13 @@ import type { Customer, CustomerData } from "../types";
 import type { GridColDef, GridRenderCellParams } from "@mui/x-data-grid";
 import { DataGrid } from "@mui/x-data-grid";
 import Button from "@mui/material/Button";
+import DeleteIcon from '@mui/icons-material/Delete';
 import Stack from "@mui/material/Stack";
 import AddCustomer from "./AddCustomer";
 import { fetchCustomer, saveCustomer, deleteCustomer, editCustomer } from "../customerapi";
+import { saveTraining } from "../trainingapi";
 import EditCustomer from "./EditCustomer";
-
+import AddTraining from "./AddTraining";
 
 
 function CustomerList() {
@@ -27,20 +29,34 @@ function CustomerList() {
             sortable: false,
             filterable: false,
             disableColumnMenu: true,
+            width: 60,
+            renderCell: (params: GridRenderCellParams) =>
+                <AddTraining data={params.row} handleSubmit={handleAddTraining} />
+
+
+        },
+        {
+            field: "delete-action",
+            headerName: "",
+            sortable: false,
+            filterable: false,
+            disableColumnMenu: true,
+            width: 60,
             renderCell: (params: GridRenderCellParams) =>
                 <Button color="error" size="small" onClick={() => handleDelete(params.id as string)}>
-                    Delete
+                    <DeleteIcon />
                 </Button>
         },
-       {
+        {
             field: "edit-action",
-             headerName: "",
-             sortable: false,
-             filterable: false,
-             disableColumnMenu: true,
-             renderCell: (params: GridRenderCellParams) =>
-                 <EditCustomer customer={params.row} handleUpdate={handleUpdate}/>
-         }
+            headerName: "",
+            sortable: false,
+            filterable: false,
+            disableColumnMenu: true,
+            width: 60,
+            renderCell: (params: GridRenderCellParams) =>
+                <EditCustomer customer={params.row} handleUpdate={handleUpdate} />
+        }
     ]
 
     const getCustomers = () => {
@@ -60,6 +76,11 @@ function CustomerList() {
     const handleAdd = (customer: Customer) => {
         saveCustomer(customer)
             .then(() => getCustomers())
+            .catch(err => console.error(err))
+    }
+
+    const handleAddTraining = (training: any) => {
+        saveTraining(training)
             .catch(err => console.error(err))
     }
 

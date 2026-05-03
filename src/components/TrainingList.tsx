@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import type { Training, TrainingData } from "../types";
+import type { TrainingData } from "../types";
 import { DataGrid, type GridColDef, type GridRenderCellParams } from "@mui/x-data-grid";
 import dayjs from "dayjs";
 import Button from "@mui/material/Button";
+import DeleteIcon from '@mui/icons-material/Delete';
 import Stack from "@mui/material/Stack";
-import AddTraining from "./AddTraining";
-import { fetchTraining, saveTraining, deleteTraining } from "../trainingapi";
+import { fetchTraining, deleteTraining } from "../trainingapi";
 
 
 function TrainingList() {
@@ -45,7 +45,7 @@ function TrainingList() {
             disableColumnMenu: true,
             renderCell: (params: GridRenderCellParams) =>
                 <Button color="error" size="small" onClick={() => handleDelete(params.value as string)}>
-                    Delete
+                    <DeleteIcon />
                 </Button>
         }
     ]
@@ -69,11 +69,6 @@ function TrainingList() {
     }
 
 
-    const handleAdd = (training: Training) => {
-        saveTraining(training)
-            .then(() => getTraining())
-            .catch(err => console.error(err))
-    }
 
     useEffect(() => {
         getTraining();
@@ -84,7 +79,6 @@ function TrainingList() {
     return (
         <>
             <Stack sx={{ mt: 2, mb: 2 }} direction="row">
-                <AddTraining handleAdd={handleAdd} />
             </Stack>
             <div style={{ width: "90%", height: 500, margin: "auto" }}>
                 <DataGrid
