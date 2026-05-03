@@ -14,6 +14,7 @@ import Home from './components/Home';
 import CustomerList from './components/CustomerList';
 import TrainingList from './components/TrainingList';
 import Calendar from './components/Calendar'
+import Statistics from './components/Statistics';
 
 function App() {
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
@@ -59,14 +60,18 @@ function App() {
               <MenuItem component={Link} to="/calendar" onClick={handleMenuClose}>
                 Calendar
               </MenuItem>
+              <MenuItem component={Link} to="/statistics" onClick={handleMenuClose}>
+                Statistics
+              </MenuItem>
             </Menu>
           </Toolbar>
         </AppBar>
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/personaltrainerapp" element={<Home />} />
           <Route path="/customers" element={<CustomerList />} />
           <Route path="/trainings" element={<TrainingList />} />
           <Route path="/calendar" element={<Calendar />} />
+          <Route path="/statistics" element={<Statistics />} />
         </Routes>
         <CssBaseline />
       </Container>

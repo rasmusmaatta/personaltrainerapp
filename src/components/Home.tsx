@@ -14,10 +14,10 @@ export default function Home() {
         gap: 3,
       }}
     >
-      <Typography variant="h3" component="h1" gutterBottom sx={{ color: "#1976d2" }}>
+      <Typography variant="h3" component="h1" gutterBottom sx={{ color: "#ED6C02" }}>
         Welcome to Personal Trainer App
       </Typography>
-      <Stack direction="row" spacing={2}>
+      <Stack direction="row" spacing={10}>
         <Button
           variant="outlined"
           color="inherit"
@@ -25,7 +25,7 @@ export default function Home() {
           to="/customers"
           size="large"
         >
-          View Customers
+          Customers
         </Button>
         <Button
           variant="outlined"
@@ -34,7 +34,25 @@ export default function Home() {
           to="/trainings"
           size="large"
         >
-          View Trainings
+          Trainings
+        </Button>
+        <Button
+          variant="outlined"
+          color="inherit"
+          component={Link}
+          to="/calendar"
+          size="large"
+        >
+          Calendar
+        </Button>
+        <Button
+          variant="outlined"
+          color="inherit"
+          component={Link}
+          to="statistics"
+          size="large"
+        >
+          Statistics
         </Button>
       </Stack>
     </Box>

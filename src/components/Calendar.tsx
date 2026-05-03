@@ -130,13 +130,13 @@ function CalendarComponent() {
     };
 
     return (
-        <Box sx={{ p: 2 }}>
+        <Box sx={{ p: 1 }}>
             {error && (
-                <Paper sx={{ p: 2, mb: 2, backgroundColor: "#ffebee" }}>
-                    <Typography color="error">{error}</Typography>
+                <Paper sx={{ p: 2, mb: 2, backgroundColor: "#ED6C02" }}>
+                    <Typography color="primary">{error}</Typography>
                 </Paper>
             )}
-            <Paper sx={{ height: "calc(100vh - 200px)" }}>
+            <Paper sx={{ height: "calc(100vh - 100px)" }}>
                 <Calendar
                     localizer={localizer}
                     events={events}
