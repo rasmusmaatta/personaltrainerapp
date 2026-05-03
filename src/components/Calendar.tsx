@@ -28,7 +28,7 @@ interface CalendarEvent {
 }
 
 function CalendarComponent() {
-    const [trainings, setTrainings] = useState<TrainingData[]>([]);
+    const [, setTrainings] = useState<TrainingData[]>([]);
     const [events, setEvents] = useState<CalendarEvent[]>([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<string | null>(null);
@@ -88,7 +88,7 @@ function CalendarComponent() {
         alert(message);
     };
 
-    const EventStyleGetter = (event: CalendarEvent) => {
+    const EventStyleGetter = (_event: CalendarEvent) => {
         const style = {
             backgroundColor: "#ed6c02",
             borderRadius: "5px",
