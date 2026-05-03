@@ -150,11 +150,10 @@ function CalendarComponent() {
                     views={["month", "week", "day", "agenda"]}
                     defaultView="month"
                     toolbar={true}
-                    navigation={true}
                     date={date}
                     onNavigate={setDate}
                     view={view}
-                    onView={setView}
+                    onView={(newView) => setView(newView as "month" | "week" | "day" | "agenda")}
                     formats={formats}
                 />
             </Paper>
