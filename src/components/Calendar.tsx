@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
-import { Calendar, dateFnsLocalizer } from "react-big-calendar";
-import dayjs from "dayjs";
+import { Calendar,  } from "react-big-calendar";
 import type { TrainingData } from "../types";
 import { fetchTraining } from "../trainingapi";
 import "react-big-calendar/lib/css/react-big-calendar.css";
@@ -91,7 +90,7 @@ function CalendarComponent() {
 
     const EventStyleGetter = (event: CalendarEvent) => {
         const style = {
-            backgroundColor: "#3174ad",
+            backgroundColor: "#ed6c02",
             borderRadius: "5px",
             opacity: 0.8,
             color: "white",

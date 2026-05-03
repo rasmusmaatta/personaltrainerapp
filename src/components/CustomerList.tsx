@@ -10,6 +10,8 @@ import { fetchCustomer, saveCustomer, deleteCustomer, editCustomer } from "../cu
 import { saveTraining } from "../trainingapi";
 import EditCustomer from "./EditCustomer";
 import AddTraining from "./AddTraining";
+import { CsvExport } from "../utils/CsvExport";
+import FileDownloadIcon from '@mui/icons-material/FileDownload';
 
 
 function CustomerList() {
@@ -97,8 +99,17 @@ function CustomerList() {
 
     return (
         <>
-            <Stack sx={{ mt: 2, mb: 2 }} direction="row">
+            <Stack sx={{ mt: 2, mb: 2 }} direction="row" spacing={2}>
                 <AddCustomer handleAdd={handleAdd} />
+                <Button
+                    variant="outlined"
+                    color="inherit"
+                    startIcon={<FileDownloadIcon />}
+                    onClick={() => CsvExport(customer)}
+                    disabled={customer.length === 0}
+                >
+                    Import CSV
+                </Button>
             </Stack>
             <div style={{ width: "90%", height: 500, margin: "auto" }}>
                 <DataGrid
