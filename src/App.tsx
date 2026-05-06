@@ -48,7 +48,7 @@ function App() {
               open={open}
               onClose={handleMenuClose}
             >
-              <MenuItem component={Link} to="/personaltrainerapp" onClick={handleMenuClose}>
+              <MenuItem component={Link} to="/personaltrainerapp/" onClick={handleMenuClose}>
                 Home
               </MenuItem>
               <MenuItem component={Link} to="/customers" onClick={handleMenuClose}>
