@@ -67,7 +67,7 @@ function App() {
           </Toolbar>
         </AppBar>
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/personaltrainerapp" element={<Home />} />
           <Route path="/customers" element={<CustomerList />} />
           <Route path="/trainings" element={<TrainingList />} />
           <Route path="/calendar" element={<Calendar />} />
