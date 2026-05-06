@@ -49,7 +49,7 @@ function App() {
               open={open}
               onClose={handleMenuClose}
             >
-              <MenuItem component={Link} to="/" onClick={handleMenuClose}>
+              <MenuItem component={Link} to="/personaltrainerapp" onClick={handleMenuClose}>
                 Home
               </MenuItem>
               <MenuItem component={Link} to="/customers" onClick={handleMenuClose}>
@@ -68,7 +68,7 @@ function App() {
           </Toolbar>
         </AppBar>
         <Routes>
-          <Route path="/" element={<Home />} />
+          <Route path="/personaltrainerapp" element={<Home />} />
           <Route path="/customers" element={<CustomerList />} />
           <Route path="/trainings" element={<TrainingList />} />
           <Route path="/calendar" element={<Calendar />} />
