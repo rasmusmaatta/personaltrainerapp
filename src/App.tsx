@@ -30,6 +30,7 @@ function App() {
 
   return (
     <>
+      <CssBaseline />
       <Container maxWidth="lg">
         <AppBar position="static" color="warning">
           <Toolbar sx={{ gap: 2 }}>
@@ -73,7 +74,6 @@ function App() {
           <Route path="/calendar" element={<Calendar />} />
           <Route path="/statistics" element={<Statistics />} />
         </Routes>
-        <CssBaseline />
       </Container>
     </>
   )
